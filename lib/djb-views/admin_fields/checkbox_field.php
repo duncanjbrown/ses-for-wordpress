@@ -1,0 +1,1 @@
+<input type="checkbox" name="<?php echo $this->slug; ?>" value="1" id="<?php echo $this->slug; ?>" <?php checked( $opt, true ); ?> />

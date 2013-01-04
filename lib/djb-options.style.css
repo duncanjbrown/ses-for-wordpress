@@ -1,0 +1,23 @@
+h2 {
+	font-size: 2.3em;
+}
+
+h3 {
+	font-size: 1.5em;
+	margin-top: 2em;
+	margin-bottom: 0.7em;
+	padding-bottom: 0.5em;
+	border-bottom: 1px solid #e1e1e1;
+}
+
+.form-table th, input[type='text'] {
+	font-size: 1.2em;
+}
+
+input[type='text'] {
+	color: #444;
+}
+
+input[name='Submit'] {
+	margin-top: 20px;
+}

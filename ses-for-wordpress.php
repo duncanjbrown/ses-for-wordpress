@@ -8,9 +8,8 @@ Author: Duncan Brown
 Author URI: http://duncanjbrown.com
 */
 
-
+define( 'SES4WP_VERSION', 0.1 );
 $ses4wp_path = plugin_basename( __FILE__ );
-
 
 /**
  * Check PHP version
@@ -33,6 +32,8 @@ register_activation_hook( $ses4wp_path, function() {
 	if( !get_option( 'ses4wp_override_wp_mail' ) )
 		update_option( 'ses4wp_override_wp_mail', true );
 } );
+
+load_plugin_textdomain( 'ses4wp', false, basename( dirname( __FILE__ ) ) );
 
 /**
  * Set up all the options
@@ -300,14 +301,14 @@ function ses4wp_add_admin_pages() {
 
 	$main_options = new Djb_Options_Page( array( 
 		'slug' 			=> 'db_ses_main_options_page',
-		'menu_title' 	=> 'SES4WP Options',
-		'page_title' 	=> 'SES4WP Options',
+		'menu_title' 	=> __( 'SES4WP Options', 'ses4wp' ),
+		'page_title' 	=> __( 'SES4WP Options', 'ses4wp' ),
 		'capability' 	=> 'manage_options',
 		'icon_url'		=> false,
 		'position'		=> false
 	) );
 
-	$keys = new Djb_Options_Page_Section( 'AWS Keys' );
+	$keys = new Djb_Options_Page_Section( __( 'AWS Keys', 'ses4wp' ) );
 
 	$keys->add_field( new Djb_Options_Page_Text_Field( array(
 		'key' => 'ses4wp_secret',
@@ -321,7 +322,7 @@ function ses4wp_add_admin_pages() {
 
 	$main_options->add_section( $keys );
 
-	$addresses = new Djb_Options_Page_Section( 'Sender addresses' );
+	$addresses = new Djb_Options_Page_Section( __( 'Sender addresses', 'ses4wp' ) );
 
 	$addresses->add_field( new Djb_Options_Page_Text_Field( array(
 		'key' => 'ses4wp_sender',
@@ -345,7 +346,7 @@ function ses4wp_add_admin_pages() {
 
 	$main_options->add_section( $addresses );
 
-	$integration = new Djb_Options_Page_Section( 'Integration' );
+	$integration = new Djb_Options_Page_Section( __( 'Integration', 'ses4wp' ) );
 
 	$integration->add_field( new Djb_Options_Page_Checkbox_Field( array(
 		'key' => 'ses4wp_override_wp_mail',
@@ -354,7 +355,7 @@ function ses4wp_add_admin_pages() {
 
 	$integration->add_field( new Djb_Options_Page_Checkbox_Field( array(
 		'key' => 'ses4wp_send_test_email',
-		'name' => 'Send a test email to ' . SES_FOR_WORDPRESS_TEST_EMAIL,
+		'name' => __( 'Send a test email to ', 'ses4wp' ) . SES_FOR_WORDPRESS_TEST_EMAIL,
 		'validation' => 'ses4wp_test'
 	) ) );
 
@@ -372,7 +373,7 @@ if( !SES_FOR_WORDPRESS_KEY || !SES_FOR_WORDPRESS_SECRET || !SES_FOR_WORDPRESS_SE
 	add_action( 'admin_init', function() {
 		global $pagenow;
 		if( $pagenow == 'plugins.php' )
-			add_settings_error( 'ses4wp_generic_message', 'ses4wp_generic', 'SES4WP needs some configuration before it\'s ready - visit <em>Settings > SES4WP Options</em> to set it up', 'error' );
+			add_settings_error( 'ses4wp_generic_message', 'ses4wp_generic', __( 'SES4WP needs some configuration before it\'s ready - visit <em>Settings > SES4WP Options</em> to set it up', 'ses4wp' ), 'error' );
 	} );
 }
 
@@ -397,7 +398,7 @@ add_action( 'admin_notices', function() {
 function ses4wp_test( $bool ) {
 
 	if( $bool ) {
-		$mail = new SES4WP_Email( SES_FOR_WORDPRESS_TEST_EMAIL, 'Test email', 'test' );
+		$mail = new SES4WP_Email( SES_FOR_WORDPRESS_TEST_EMAIL, __( 'Test email', 'ses4wp' ), __( 'This email was sent via Amazon SES by SES for Wordpress version ', 'ses4wp' ) . SES4WP_VERSION );
 		$response = $mail->send();
 
 		if( is_wp_error( $response ) )

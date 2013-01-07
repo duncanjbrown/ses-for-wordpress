@@ -22,9 +22,11 @@ Embedding images
 
 Before your call to wp_mail(), call `ses4wp_embed_image` with an image handle and the path to your image. It will return a content_id for you to use in your src attribute.
 
+Paths should be given relative to your webserver root. So for instance, to embed `wp-content/themes/twentyeleven/images/wordpress.png`, you would *omit* the slash at the beginning.
+
 eg
 
-    $content_id = ses4wp_embed_image( 'my_image', 'path/to/image.jpg' );
+    $content_id = ses4wp_embed_image( 'my_image', 'wp-content/path/to/image.jpg' );
     $mail_body = "This is an image. <img src='cid:$content_id' />";
     wp_mail( 'bob@example.com', 'My Subject', $mail_body );
 

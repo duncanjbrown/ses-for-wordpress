@@ -1,7 +1,7 @@
 === SES for Wordpress ===
 Contributors: duncanjbrown
 Tags: email, aws, ses
-Requires at least: 3.4
+Requires at least: 3.5
 Tested up to: 3.5
 Stable tag: trunk
 License: GPLv2 or later

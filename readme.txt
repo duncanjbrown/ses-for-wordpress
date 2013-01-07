@@ -60,6 +60,10 @@ You can, but it won't work everywhere. For delivery to many clients, including A
 
 There's some details on how it works [here at StackOverflow](http://stackoverflow.com/questions/4312687/how-to-embed-images-in-email). This plugin basically handles all that header creation palaver for you.
 
+= Is it on GitHub? =
+
+Yes: [duncanjbrown/ses-for-wordpress](https://github.com/duncanjbrown/ses-for-wordpress)
+
 == Screenshots ==
 
 1. The options page

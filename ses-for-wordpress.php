@@ -8,6 +8,7 @@ Author: Duncan Brown
 Author URI: http://duncanjbrown.com
 */
 
+
 define( 'SES4WP_VERSION', 0.1 );
 $ses4wp_path = plugin_basename( __FILE__ );
 
@@ -174,8 +175,9 @@ class SES4WP_Email {
 		$this->mail->encodeRecipients( $to );
 
 		$default_headers = array(
-			'From' => SES_FOR_WORDPRESS_SENDER_NAME . ' <' . SES_FOR_WORDPRESS_SENDER .'>', 
-			'Reply-To' => SES_FOR_WORDPRESS_REPLY_TO,
+			'From' => apply_filters( 'ses4wp_sender_name', SES_FOR_WORDPRESS_SENDER_NAME ) . ' <' . 
+				apply_filters( 'ses4wp_sender', SES_FOR_WORDPRESS_SENDER ) .'>', 
+			'Reply-To' => apply_filters( 'ses4wp_reply_to', SES_FOR_WORDPRESS_REPLY_TO ),
 			'To' => $this->mail->encodeRecipients( $to ),
 			'Subject' => '=?UTF-8?Q?' . quoted_printable_encode($subject) . '?='
 		);
@@ -287,7 +289,11 @@ if ( !function_exists( 'wp_mail' ) && get_option( 'ses4wp_override_wp_mail' ) ) 
 			}
 		}
 
-		$mail->send();
+		try {
+			$mail->send();
+		} catch( Exception $e ) {
+			// eg if there is a problem connecting to SES
+		}
 	}
 
 endif;
